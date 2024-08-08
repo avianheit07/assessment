@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/stores/{storeId}', [App\Http\Controllers\StoreController::class, 'show'])->name('stores.show');
