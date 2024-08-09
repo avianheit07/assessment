@@ -6,5 +6,13 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    //
+    public function __construct()
+    {
+
+    }
+
+    public function index(Request $request)
+    {
+        
+    }
 }

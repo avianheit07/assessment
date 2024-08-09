@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Brand;
+use App\Models\Journal;
 use App\Models\Store;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,8 +25,19 @@ class DatabaseSeeder extends Seeder
         });
 
         $users = User::factory(5)->create();
-        $stores->each(function ($store) use ($users) {
+        $startDate = Carbon::now()->subYear()->startOfYear();
+        $endDate = Carbon::now()->subYear()->endOfYear();
+        
+        $stores->each(function ($store) use ($users, $startDate, $endDate) {
             $store->users()->attach($users->random());
+            $currentDate = $startDate->copy();
+            while ($currentDate->lte($endDate)) {
+                Journal::factory()->create([
+                    'store_id' => $store->id,
+                    'date' => $currentDate->toDateString(),
+                ]);
+                $currentDate->addDay();
+            }
         });
     }
 }
