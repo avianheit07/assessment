@@ -25,16 +25,27 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm"  style="background-color: {{ $storeBackgroundColor ?? '#FFFFFF' }} !important">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    @guest
+                        {{ config('app.name', 'Laravel') }}
+                    @else
+                        @isset($selectedStore)
+                            <span  style="color: {{ $storeTextColor ?? '#000' }}"> 
+                                {{ 'Welcome to ' . $selectedStore?->brand?->name }}
+                            </span>
+                        @else
+                            {{ config('app.name', 'Laravel') }}
+                        @endisset
+                        
+                    @endguest
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
 
@@ -57,11 +68,15 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                                    style="color: {{ $storeTextColor ?? '#000' }}"
+                                >
                                     {{ Auth::user()->name  }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
+                                    <a class="dropdown-item" href="#">Reports <span class="sr-only"></span></a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

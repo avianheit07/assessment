@@ -23,6 +23,6 @@ class StoreController extends Controller
         session(['selected_store' => $store->id]);
 
         // Pass the store to the view
-        return view('store.show', compact('store'));
+        return redirect('/home');
     }
 }

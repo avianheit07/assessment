@@ -18,6 +18,7 @@
                                         <h5 class="card-title">{{ $store->brand->name }}</h5>
                                         <p class="card-text"><strong>Number:</strong> {{ $store->number }}.</p>
                                         <p class="card-text"><strong>Address:</strong> {{ $store->address }}</p>
+                                        <p class="card-text"><strong>Color:</strong> {{ $store->brand->color }}</p>
                                         <a href="{{ route('stores.show', ['storeId' => $store->id])}}" class="btn btn-primary">Visit store</a>
                                     </div>
                                 </div>
