@@ -29,7 +29,7 @@ class ReportController extends Controller
         }
 
         $journals = $this->query->setFilters(
-            $request->merge(['store_id' => $request->user()->id])->all()
+            $request->merge(['store_id' => $store->id])->all()
         )->query()->paginate();
 
         return view('/reports', compact('journals', 'store'));
